@@ -1,11 +1,19 @@
 export function taskController() {
+    function saveData({ tasks }) {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function clearData() {
+        localStorage.removeItem('tasks');
+    }
+
     function createTask({ tasks, taskInput }) {
         tasks.push({
             title: taskInput.value,
             priority: 'High',
             status: 'Pending'
         });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        saveData({ tasks });
     }
 
     function updateTask({ tasks, task, index }) {
@@ -14,12 +22,12 @@ export function taskController() {
             priority: task?.priority ?? tasks[index].priority,
             status: task?.status ?? tasks[index].status
         };
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        saveData({ tasks });
     }
 
     function deleteTask({ tasks, index }) {
         tasks.splice(index, 1);
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        saveData({ tasks });
     }
 
     function clearTaskList({ tasksList }) {
@@ -28,14 +36,15 @@ export function taskController() {
 
     function removeTaskList({ tasks }) {
         tasks = [];
-        localStorage.removeItem('tasks');
+        clearData();
     }
 
     return {
-        createTask,
-        updateTask,
-        deleteTask,
         clearTaskList,
-        removeTaskList
+        createTask,
+        deleteTask,
+        removeTaskList,
+        saveData,
+        updateTask
     };
 }
