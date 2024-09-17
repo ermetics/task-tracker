@@ -1,58 +1,32 @@
+import { useHandlers } from './helpers/handlers.js';
 import { useTasks } from './helpers/tasks.js';
-import { taskController } from './controllers/tasksController.js';
-const { clearTaskInput, createTaskList, createTaskListOrderIcon, addTask } = useTasks();
-const { saveData } = taskController();
+
+const { clearTaskInput, createTaskList, createTaskListOrderIcon } = useTasks();
+const { onClickOrderListButton, onClickAddTask, onKeyEnterTaskInput } = useHandlers();
 
 window.addEventListener('load', () => {
-    const tasksList = document.getElementById('tasks-list');
-    const orderListButton = document.getElementById('task-list-ordener');
-    const orderListIcon = document.createElement('svg');
+    // DOM Elements
     const AddTaskButton = document.getElementById('add-task-button');
+    const orderListButton = document.getElementById('task-list-ordener');
     const taskInput = document.getElementById('task-input');
-    const lsTasks = localStorage.getItem('tasks');
-    const tasks = lsTasks ? JSON.parse(lsTasks) : [];
+    const tasksList = document.getElementById('tasks-list');
+
+    // Local Storage Data
     const lsOrder = localStorage.getItem('order');
+    const lsTasks = localStorage.getItem('tasks');
+
+    // Default Values
+    const tasks = lsTasks ? JSON.parse(lsTasks) : [];
     let orderListAsc = lsOrder ?? 'asc';
 
+    // Initialize Task List App
     clearTaskInput(taskInput);
     createTaskList({ tasks, tasksList });
+    const orderListIcon = document.createElement('svg');
     createTaskListOrderIcon({ orderListButton, orderListIcon, orderListAsc });
 
-    AddTaskButton.addEventListener('click', () => {
-        if (taskInput.value) {
-            addTask({
-                tasks,
-                tasksList,
-                taskInput,
-                task: {
-                    title: taskInput.value,
-                    priority: 'High',
-                    status: 'Pending'
-                }
-            });
-        }
-    });
-
-    orderListButton.addEventListener('click', () => {
-        let sortTasks = [];
-        if (orderListAsc === 'asc') {
-            sortTasks = tasks.sort((a, b) => {
-                if (a.title < b.title) return 1;
-                if (a.title > b.title) return -1;
-                return 0;
-            });
-        } else {
-            sortTasks = tasks.sort((a, b) => {
-                if (a.title < b.title) return -1;
-                if (a.title > b.title) return 1;
-                return 0;
-            });
-        }
-
-        createTaskList({ tasks: sortTasks, tasksList });
-        saveData({ tasks: sortTasks });
-        orderListAsc = orderListAsc === 'asc' ? 'desc' : 'asc';
-        createTaskListOrderIcon({ orderListButton, orderListIcon, orderListAsc });
-        localStorage.setItem('order', orderListAsc);
-    });
+    // Event Listeners for DOM Elements
+    AddTaskButton.addEventListener('click', () => onClickAddTask({ tasks, tasksList, taskInput }));
+    orderListButton.addEventListener('click', () => onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }));
+    taskInput.addEventListener('keydown', (event) => onKeyEnterTaskInput({ event, tasks, tasksList, taskInput }));
 });

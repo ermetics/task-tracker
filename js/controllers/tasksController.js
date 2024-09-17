@@ -1,5 +1,8 @@
-export function taskController() {
-    function saveData({ tasks }) {
+import { useUtils } from '../helpers/utils.js';
+const { reNumberTasks, setNextOrderNumber } = useUtils();
+
+export function useTasksController() {
+    function saveData(tasks) {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
@@ -9,41 +12,34 @@ export function taskController() {
 
     function createTask({ tasks, taskInput }) {
         tasks.push({
+            order: setNextOrderNumber(tasks),
             title: taskInput.value,
-            priority: 'High',
+            priority: 'Low',
             status: 'Pending'
         });
-        saveData({ tasks });
+        saveData(tasks);
     }
 
     function updateTask({ tasks, task, index }) {
         tasks[index] = {
+            order: task?.order ?? tasks[index].order,
             title: task?.title ?? tasks[index].title,
             priority: task?.priority ?? tasks[index].priority,
             status: task?.status ?? tasks[index].status
         };
-        saveData({ tasks });
+        saveData(tasks);
     }
 
     function deleteTask({ tasks, index }) {
         tasks.splice(index, 1);
-        saveData({ tasks });
-    }
-
-    function clearTaskList({ tasksList }) {
-        tasksList.innerHTML = '';
-    }
-
-    function removeTaskList({ tasks }) {
-        tasks = [];
-        clearData();
+        reNumberTasks(tasks);
+        saveData(tasks);
     }
 
     return {
-        clearTaskList,
+        clearData,
         createTask,
         deleteTask,
-        removeTaskList,
         saveData,
         updateTask
     };
