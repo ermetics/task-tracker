@@ -46,27 +46,33 @@ export function useTasks() {
         // For changing the priority of the task
         tasks.forEach((task, index) => {
             const priorityTaskElement = document.getElementById(`priority-task-${index}`);
-            priorityTaskElement.addEventListener('click', () => {
+            const handlePriorityChange = () => {
                 onClickPriorityTask({ tasks, index });
                 createTaskList({ tasks, tasksList });
-            });
+            };
+            priorityTaskElement.addEventListener('click', handlePriorityChange);
+            priorityTaskElement.addEventListener('touchstart', handlePriorityChange);
         });
 
         // For marking / unmarking the task as completed
         tasks.forEach((task, index) => {
             const completedTaskElement = document.getElementById(`completed-task-${index}`);
-            completedTaskElement.addEventListener('click', () => {
+            const handleCompletionChange = () => {
                 onClickCompletedTask({ tasks, tasksList, index });
                 createTaskList({ tasks, tasksList });
-            });
+            };
+            completedTaskElement.addEventListener('click', handleCompletionChange);
+            completedTaskElement.addEventListener('touchstart', handleCompletionChange);
         });
 
         // For deleting the task
         tasks.forEach((task, index) => {
             const deleteTaskElement = document.getElementById(`delete-task-${index}`);
-            deleteTaskElement.addEventListener('click', () => {
+            const handleDelete = () => {
                 onDeleteTask({ tasks, tasksList, index });
-            });
+            };
+            deleteTaskElement.addEventListener('click', handleDelete);
+            deleteTaskElement.addEventListener('touchstart', handleDelete);
         });
 
         // For hovering the task row
@@ -80,12 +86,20 @@ export function useTasks() {
                 const taskTitleEditionElement = document.getElementById(`task-title-edition-${index}`);
                 taskTitleEditionElement.classList.add('hidden');
             });
+            taskElement.addEventListener('touchstart', () => {
+                const taskTitleEditionElement = document.getElementById(`task-title-edition-${index}`);
+                taskTitleEditionElement.classList.remove('hidden');
+            });
+            taskElement.addEventListener('touchend', () => {
+                const taskTitleEditionElement = document.getElementById(`task-title-edition-${index}`);
+                taskTitleEditionElement.classList.add('hidden');
+            });
         });
 
         // For editing the task title
         tasks.forEach((task, index) => {
             const taskTitleElement = document.getElementById(`task-title-edition-${index}`);
-            taskTitleElement.addEventListener('click', (event) => {
+            const handleTitleEdit = (event) => {
                 event.stopPropagation();
                 event.preventDefault();
                 const newTitle = prompt('Enter new title:', task.title);
@@ -105,7 +119,9 @@ export function useTasks() {
 
                     createTaskList({ tasks, tasksList });
                 }
-            });
+            };
+            taskTitleElement.addEventListener('click', handleTitleEdit);
+            taskTitleElement.addEventListener('touchstart', handleTitleEdit);
         });
         // === End of Task list elements listeners
     }
