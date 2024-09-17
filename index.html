@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Task Tracker App | by ermetics.com</title>
+        <title>Task Tracker | by ermetics.com</title>
         <link rel="stylesheet" href="./css/index.css" />
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
@@ -13,21 +13,21 @@
             <h1 class="m-auto text-3xl sm:text-xl font-bold text-orange-600">Task Tracker</h1>
         </header>
 
-        <main class="w-full max-w-2xl h-96 p-4 mx-auto">
+        <main class="w-full max-w-3xl h-96 p-4 mx-auto">
             <section class="grid">
                 <h2 class="mb-3 text-xl font-semibold text-slate-200">Add Task</h2>
-                <form class="flex gap-2 align-center">
+                <form class="grid grid-cols-1 sm:grid-cols-3 gap-3 align-center">
                     <input
-                        class="grow h-12 sm:h-8 rounded-xl ps-3"
+                        class="sm:col-span-2 h-10 sm:h-8 rounded-xl ps-3 placeholder:italic placeholder:text-slate-400 placeholder:text-sm"
                         type="text"
                         id="task-input"
                         name="task"
+                        placeholder="Add a new task..."
                         value=""
-                        required
                     />
                     <button
                         id="add-task-button"
-                        class="basis-1/4 bg-orange-600 hover:bg-orange-400 transition-color duration-300 text-white text-xs rounded-md"
+                        class="h-10 sm:h-8 bg-orange-600 hover:bg-orange-400 transition-color duration-300 text-white text-xs font-semibold rounded-full"
                         type="button"
                     >
                         Add Task
@@ -41,7 +41,7 @@
                     <button id="task-list-ordener" class="-mb-[2.5px]"></button>
                 </h2>
                 <ul
-                    class="space-y-1 text-gray-500 text-sm list-inside dark:text-gray-400"
+                    class="space-y-1 ps-2 pe-9 text-gray-500 text-sm list-inside dark:text-gray-400 max-w-lg sm:max-w-3xl"
                     id="tasks-list"
                 >
                     <!-- Tasks will be added here -->
@@ -49,10 +49,12 @@
             </section>
         </main>
 
-        <footer class="w-full h-12 flex fixed bottom-0 text-slate-600">
+        <footer class="w-full h-12 flex fixed bottom-0 text-slate-500">
             <p class="m-auto text-xs">
                 &copy; 2024
-                <a class="hover:text-orange-400 transition duration-300" href="https://ermetics.com"
+                <a
+                    class="hover:text-orange-400 font-semibold transition duration-300"
+                    href="https://ermetics.com"
                     >ermetics.com</a
                 >
             </p>
