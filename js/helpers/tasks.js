@@ -57,8 +57,8 @@ export function useTasks() {
         // For marking / unmarking the task as completed
         tasks.forEach((task, index) => {
             const completedTaskElement = document.getElementById(`completed-task-${index}`);
-            const handleCompletionChange = () => {
-                onClickCompletedTask({ tasks, tasksList, index });
+            const handleCompletionChange = (event) => {
+                onClickCompletedTask({ event, tasks, tasksList, index });
                 createTaskList({ tasks, tasksList });
             };
             completedTaskElement.addEventListener('click', handleCompletionChange);
