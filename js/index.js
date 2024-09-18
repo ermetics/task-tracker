@@ -26,10 +26,7 @@ window.addEventListener('load', () => {
 
     // Event Listeners for DOM Elements
     const addTaskHandler = () => onClickAddTask({ tasks, tasksList, taskInput });
-    const orderListHandler = () => {
-        onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon });
-        orderListAsc = !orderListAsc;
-    }
+    const orderListHandler = () => onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }).then(() => (orderListAsc = !orderListAsc));
     const keyEnterHandler = (event) => onKeyEnterTaskInput({ event, tasks, tasksList, taskInput });
 
     addTaskButton.addEventListener('click', addTaskHandler);

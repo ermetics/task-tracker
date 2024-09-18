@@ -20,18 +20,18 @@ export function useHandlers() {
         }
     }
 
-    function onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }) {
+    async function onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }) {
         const PRIORITY_VALUES = { High: 3, Medium: 2, Low: 1 };
         let sortTasks = [];
 
         if (orderListAsc) {
-            sortTasks = tasks.sort((a, b) => {
+            sortTasks = await tasks.sort((a, b) => {
                 if (PRIORITY_VALUES[a.priority] < PRIORITY_VALUES[b.priority]) return 1;
                 if (PRIORITY_VALUES[a.priority] > PRIORITY_VALUES[b.priority]) return -1;
                 return 0;
             });
         } else {
-            sortTasks = tasks.sort((a, b) => {
+            sortTasks = await tasks.sort((a, b) => {
                 if (PRIORITY_VALUES[a.priority] < PRIORITY_VALUES[b.priority]) return -1;
                 if (PRIORITY_VALUES[a.priority] > PRIORITY_VALUES[b.priority]) return 1;
                 return 0;
