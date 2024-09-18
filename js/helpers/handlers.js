@@ -22,16 +22,18 @@ export function useHandlers() {
 
     function onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }) {
         let sortTasks = [];
+        const PRIORITY_VALUES = { High: 3, Medium: 2, Low: 1 };
+
         if (orderListAsc === 'asc') {
             sortTasks = tasks.sort((a, b) => {
-                if (a.order < b.order) return 1;
-                if (a.order > b.order) return -1;
+                if (PRIORITY_VALUES[a.priority] < PRIORITY_VALUES[b.priority]) return 1;
+                if (PRIORITY_VALUES[a.priority] > PRIORITY_VALUES[b.priority]) return -1;
                 return 0;
             });
-        } else {
+        } else if (orderListAsc === 'desc') {
             sortTasks = tasks.sort((a, b) => {
-                if (a.order < b.order) return -1;
-                if (a.order > b.order) return 1;
+                if (PRIORITY_VALUES[a.priority] < PRIORITY_VALUES[b.priority]) return -1;
+                if (PRIORITY_VALUES[a.priority] > PRIORITY_VALUES[b.priority]) return 1;
                 return 0;
             });
         }
