@@ -63,7 +63,8 @@ export function useHandlers() {
         });
     }
 
-    function onClickCompletedTask({ tasks, index }) {
+    function onClickCompletedTask({ event, tasks, index }) {
+        event.stopPropagation();
         tasks[index].status = tasks[index].status === 'Completed' ? 'Pending' : 'Completed';
 
         updateTask({

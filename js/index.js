@@ -6,7 +6,7 @@ const { onClickOrderListButton, onClickAddTask, onKeyEnterTaskInput } = useHandl
 
 window.addEventListener('load', () => {
     // DOM Elements
-    const AddTaskButton = document.getElementById('add-task-button');
+    const addTaskButton = document.getElementById('add-task-button');
     const orderListButton = document.getElementById('task-list-ordener');
     const taskInput = document.getElementById('task-input');
     const tasksList = document.getElementById('tasks-list');
@@ -26,7 +26,20 @@ window.addEventListener('load', () => {
     createTaskListOrderIcon({ orderListButton, orderListIcon, orderListAsc });
 
     // Event Listeners for DOM Elements
-    AddTaskButton.addEventListener('click', () => onClickAddTask({ tasks, tasksList, taskInput }));
-    orderListButton.addEventListener('click', () => onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon }));
-    taskInput.addEventListener('keydown', (event) => onKeyEnterTaskInput({ event, tasks, tasksList, taskInput }));
+    const addTaskHandler = () => onClickAddTask({ tasks, tasksList, taskInput });
+    const orderListHandler = () => onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon });
+    const keyEnterHandler = (event) => onKeyEnterTaskInput({ event, tasks, tasksList, taskInput });
+
+    addTaskButton.addEventListener('click', addTaskHandler);
+    addTaskButton.addEventListener('touchstart', addTaskHandler);
+    
+    orderListButton.addEventListener('click', orderListHandler);
+    orderListButton.addEventListener('touchstart', orderListHandler);
+    
+    taskInput.addEventListener('keydown', keyEnterHandler);
+    taskInput.addEventListener('touchstart', (event) => {
+        if (event.key === 'Enter') {
+            keyEnterHandler(event);
+        }
+    });
 });
