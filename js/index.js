@@ -12,12 +12,11 @@ window.addEventListener('load', () => {
     const tasksList = document.getElementById('tasks-list');
 
     // Local Storage Data
-    const lsOrder = localStorage.getItem('order');
     const lsTasks = localStorage.getItem('tasks');
 
     // Default Values
     const tasks = lsTasks ? JSON.parse(lsTasks) : [];
-    let orderListAsc = lsOrder ?? 'asc';
+    let orderListAsc = true;
 
     // Initialize Task List App
     clearTaskInput(taskInput);
@@ -27,15 +26,18 @@ window.addEventListener('load', () => {
 
     // Event Listeners for DOM Elements
     const addTaskHandler = () => onClickAddTask({ tasks, tasksList, taskInput });
-    const orderListHandler = () => onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon });
+    const orderListHandler = () => {
+        onClickOrderListButton({ tasks, tasksList, orderListAsc, orderListButton, orderListIcon });
+        orderListAsc = !orderListAsc;
+    }
     const keyEnterHandler = (event) => onKeyEnterTaskInput({ event, tasks, tasksList, taskInput });
 
     addTaskButton.addEventListener('click', addTaskHandler);
     addTaskButton.addEventListener('touchstart', addTaskHandler);
-    
+
     orderListButton.addEventListener('click', orderListHandler);
     orderListButton.addEventListener('touchstart', orderListHandler);
-    
+
     taskInput.addEventListener('keydown', keyEnterHandler);
     taskInput.addEventListener('touchstart', (event) => {
         if (event.key === 'Enter') {

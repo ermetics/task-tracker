@@ -28,7 +28,7 @@ export function useTasks() {
     }
 
     function createTaskListOrderIcon({ orderListButton, orderListIcon, orderListAsc }) {
-        orderListIcon.innerHTML = orderListAsc === 'asc' ? orderListIconAsc() : orderListIconDesc();
+        orderListIcon.innerHTML = orderListAsc ? orderListIconAsc() : orderListIconDesc();
         orderListButton.appendChild(orderListIcon);
     }
 
